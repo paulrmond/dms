@@ -1,0 +1,231 @@
+<div class="bg-header">
+  <div class="custom-container">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="header-title">Documents Library</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Click on the event date to view the uploaded files.</h4>      
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let document of documentList;let i = index;">
+              <td><a class="file-name" (click)="showSubFolder(i)">{{document?.folderName.toUpperCase()}}&nbsp;&nbsp;<span class="bold-text">{{subfolderIndex == i ? '-' : '+'}}</span></a>
+                <table class="table table-hover" *ngIf="subfolderIndex == i && document?.fileElements && document?.fileElements.length > 0">
+                  <thead>
+                    <tr>
+                      <th>File Type</th>
+                      <th>File Name</th>
+                      <th>Date Created</th>
+                      <th>Size</th>
+                      <th>Download</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                      <!-- <p class="text-center" (click)="downloadFile(file)"><a nohref>download</a></p> -->
+                    
+                    <tr *ngFor="let file of document.fileElements;let i = index;" class="file-name">
+                      <td>{{file?.contentType}}</td>
+                      <td>{{file?.fileName}}</td>
+                      <td>{{file?.timeCreated}}</td>
+                      <td>{{file?.size}}kb</td>
+                      <td class="text-danger"><p class="text-left" (click)="downloadFile(file)"><a nohref></a><i class="mdi mdi-arrow-down"></i></p></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Upload File:</h4>
+      <p class="card-description">
+        Click the upload button and select file to upload.
+      </p>
+      <div class="col-12 grid-margin stretch-card no-padding">
+          <input matInput [matDatepicker]="picker" (dateChange)="_selectedDate($event)">
+          <mat-datepicker #picker></mat-datepicker>
+        <button mat-raised-button (click)="picker.open()">Choose date</button>
+      </div>
+      <div class="col-12 grid-margin stretch-card no-padding">
+        <label for="exampleFormControlTextarea1">Type below the short description about the event.</label>        
+      </div>
+      <div class="col-12 grid-margin stretch-card no-padding">
+      <textarea id="readme" class="form-control" name="readme" rows="5"></textarea>
+    </div>
+      <form class="form-inline"> 
+        <div class="input-group mb-2 mr-sm-2">
+          <input type="file"
+               id="file-upload"
+               (change)="handleFileInput($event.target.files)">
+        </div>
+        <button (click)="uploadFileToActivity(mediumModalContents)" type="submit" class="btn btn-gradient-danger btn-icon-text">
+          <i class="mdi mdi-upload btn-icon-prepend"></i>                                                    
+          Upload
+        </button>
+        <!-- <button type="submit" class="btn btn-gradient-primary mb-2">Submit</button> -->
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="">
+  <div class="custom-container">
+    
+    <div class="row document-padding">
+      <div class="col m3 s12">
+        <div class="row document-header-padding">
+          <div class="col s12">
+            <p class="header-documents">Document List : </p>
+          </div>
+        </div>
+        <div class="row date-list-padding" *ngFor="let document of documentList;let i = index;">
+          <div class="col s12">
+            <p><a class="file-name" (click)="showSubFolder(i)">{{document?.folderName.toUpperCase()}}&nbsp;&nbsp;<span class="bold-text">{{subfolderIndex == i ? '-' : '+'}}</span></a></p>
+          </div>
+          <div *ngIf="subfolderIndex == i && document?.fileElements && document?.fileElements.length > 0" class="col s12 child-subfolder-container">
+            <ul>
+              <li *ngFor="let file of document.fileElements;let i = index;" class="file-name">{{file?.fileName}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col m9 s12 border-documents">
+        <div class="row bg-container file-sorting">
+          <div class="col s2 text-center">
+            <p class="text-center">File Type</p>
+          </div>
+          <div class="col s3">
+            <p class="text-center">File Name</p>
+          </div>
+          <div class="col s3">
+            <p class="text-center">Time Created</p>
+          </div>
+          <div class="col s2">
+            <p class="text-center">Size</p>
+          </div>
+          <div class="col s2">
+            <p class="text-center">Download</p>
+          </div>
+        </div>
+        <ng-container *ngIf="subfolderIndex !== null">
+          <div class="row files-container" *ngFor="let file of documentList[subfolderIndex].fileElements;let i = index;">
+            <div class="col s2 text-center">
+              <p class="text-center">{{file?.contentType}}</p>
+            </div>
+            <div class="col s3">
+              <p class="text-center file-name">{{file?.fileName}}</p>
+            </div>
+            <div class="col s3">
+              <p class="text-center">{{file?.timeCreated}}</p>
+            </div>
+            <div class="col s2">
+              <p class="text-center">{{file?.size}}KB</p>
+            </div>
+            <div class="col s2">
+              <p class="text-center" (click)="downloadFile(file)"><a nohref>download</a></p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="upload-container">
+  <div class="custom-container">
+    <div class="row">
+      <div class="col s6 text-left">
+        <button class="custom-button" (click)="uploadFileToActivity()">
+          Upload
+        </button>
+      </div>
+      <div class="col s6 text-right">
+        <input type="file"
+               id="file-upload"
+               (change)="handleFileInput($event.target.files)">
+      </div>
+    </div>
+  </div>
+
+   <div class="custom-container">
+    <div class="row">
+      <div class="col s12">
+        <h4>Files to upload :</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <p>-file1.psd</p>
+        <p>-file2.pdf</p>
+        <p>-file3.png</p>
+        <p></p>
+      </div>
+    </div>
+
+     <div class="row drag-container">
+      <div class="col s12">
+        <p>drag your files here</p>
+      </div>
+    </div>
+  </div> 
+</div> -->
+
+<!-- Dummy Modal Starts -->
+<div class="modal demo-modal" hidden="hidden">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">File Upload</h5>
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> 
+      <div class="modal-body">
+        <p>File upload complete!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dummy Modal Ends -->
+        <ng-template #mediumModalContents let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel-2">File Upload</h5>
+              <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>File upload complete!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" (click)="modal.close()">OK</button>
+            </div>
+          </div>
+        </ng-template>

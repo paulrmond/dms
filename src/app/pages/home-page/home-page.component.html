@@ -1,0 +1,33 @@
+<div class="bg-header">
+  <div class="custom-container">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="header-title">List of seminars</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bg-container">
+
+
+  <div class="custom-container">
+    <div class="row updates-padding" *ngFor="let data of homeList;let i = index;">
+      <div class="alert alert-info col s12" role="alert">
+        <h3>{{data?.date}}</h3>
+        <p>
+          {{data?.readme}}
+        </p>
+      </div>
+      <!-- <div class="col s12">
+        <h3>{{data?.date}} - {{data?.foldername}}</h3>
+      </div> -->
+      <!-- <div class="col s12">
+        <p>
+          {{data?.readme}}
+        </p>
+      </div> -->
+    </div>
+
+    
+  </div>
+</div>
